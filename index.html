@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cửa hàng văn phòng phẩm Thu Hằng, nơi cung cấp các sản phẩm chất lượng cho văn phòng của bạn.">
+    <meta name="keywords" content="văn phòng phẩm, bút bi, giấy A4, sổ tay, văn phòng, cửa hàng trực tuyến">
+    <meta name="author" content="Thu Hằng">
+    <title>Cửa Hàng Văn Phòng Phẩm. Xin chào!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #3498db;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .cart {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #e9e2e6;
+            color: #ff0000;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .cart-content {
+            display: none;
+            position: fixed;
+            top: 50px;
+            right: 10px;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .cart-content .close-btn {
+            text-align: center;
+            margin-top: 10px;
+            background-color: #e74c3c;
+            color: #fff;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .cart-content .checkout-btn {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            margin-top: 15px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cart-content .checkout-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            height: 350px;
+        }
+
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .product button:hover {
+            background-color: #2980b9;
+        }
+
+        #contact {
+            text-align: center;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 600px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .personal-info {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 30px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            z-index: 1000;
+            border-radius: 8px;
+        }
+
+        .personal-info h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .personal-info label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .personal-info input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .personal-info button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .personal-info button[type="button"] {
+            background-color: #e74c3c;
+        }
+
+        .personal-info button[type="button"]:hover {
+            background-color: #c0392b;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Mờ nền */
+            display: none;
+            z-index: 999;
+        }
+
+        /* Bảng cảm ơn */
+        .thank-you {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 40px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 450px;
+            z-index: 1000;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        /* Khi bảng cảm ơn hiển thị, làm mờ nền */
+        .overlay.show {
+            display: block;
+        }
+
+        /* Nút Quay lại trang chủ */
+        .back-btn {
+            background-color: #2ecc71; /* Màu xanh lá cây */
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: #27ae60; /* Màu xanh lá cây đậm hơn khi hover */
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Cửa Hàng Văn Phòng Phẩm Thu Hằng. Xin chào!</h1>
+    <p>Chất lượng văn phòng phẩm cho mọi văn phòng!</p>
+</header>
+
+<nav>
+    <a href="#home">Trang chủ</a>
+    <a href="#shop">Sản phẩm</a>
+    <a href="#contact">Liên hệ</a>
+</nav>
+
+<!-- Giỏ hàng -->
+<div class="cart" onclick="toggleCart()">Giỏ hàng (0)</div>
+<div class="cart-content">
+    <h3>Giỏ hàng của bạn</h3>
+    <ul id="cart-items">
+        <!-- Các sản phẩm sẽ được thêm vào đây -->
+    </ul>
+    <button class="close-btn" onclick="toggleCart()">Đóng</button>
+    <button class="checkout-btn" onclick="checkout()">Mua hàng</button>
+</div>
+
+<!-- Sản phẩm -->
+<div class="container" id="shop">
+    <h2>Sản phẩm văn phòng phẩm</h2>
+    <div class="products">
+        <!-- Sản phẩm 1 -->
+        <div class="product" data-id="1" data-name="Bút bi" data-price="15000">
+            <img src="Bútbi.jpg.jpg" alt="Bút bi">
+            <h3>Bút bi</h3>
+            <p>Bút bi chất lượng cao, mực đều, không lem.</p>
+            <div class="price">15.000 VND</div>
+            <button onclick="addToCart(1, 'Bút bi', 15000)">Thêm vào giỏ</button>
+        </div>
+        <!-- Sản phẩm 2 -->
+        <div class="product" data-id="2" data-name="Giấy A4" data-price="70000">
+            <img src="A4.jpg.jpg" alt="Giấy A4">
+            <h3>Giấy A4</h3>
+            <p>Giấy A4 trắng, dày, phù hợp cho mọi loại máy in.</p>
+            <div class="price">70.000 VND</div>
+            <button onclick="addToCart(2, 'Giấy A4', 70000)">Thêm vào giỏ</button>
+        </div>
+        <!-- Sản phẩm 3 -->
+        <div class="product" data-id="3" data-name="Sổ tay" data-price="50000">
+            <img src="Sổtay.jpg.jpg" alt="Sổ tay">
+            <h3>Sổ tay</h3>
+            <p>Sổ tay bìa cứng, kích thước vừa phải, dễ mang theo.</p>
+            <div class="price">50.000 VND</div>
+            <button onclick="addToCart(3, 'Sổ tay', 50000)">Thêm vào giỏ</button>
+        </div>
+        <!-- Sản phẩm 4 -->
+        <div class="product" data-id="4" data-name="Bút chì" data-price="20000">
+            <img src="Bútchì.jpg.jpg" alt="Bút chì">
+            <h3>Bút chì</h3>
+            <p>Bút chì mềm, dễ viết, không gãy.</p>
+            <div class="price">20.000 VND</div>
+            <button onclick="addToCart(4, 'Bút chì', 20000)">Thêm vào giỏ</button>
+        </div>
+        <!-- Sản phẩm 5 -->
+        <div class="product" data-id="5" data-name="Gôm tẩy" data-price="10000">
+            <img src="Gôm.jpg.jpg" alt="Gôm tẩy">
+            <h3>Gôm tẩy</h3>
+            <p>Gôm tẩy chất lượng, xóa sạch và không làm hỏng giấy.</p>
+            <div class="price">10.000 VND</div>
+            <button onclick="addToCart(5, 'Gôm tẩy', 10000)">Thêm vào giỏ</button>
+        </div>
+        <!-- Sản phẩm 6 -->
+        <div class="product" data-id="6" data-name="Bìa hồ sơ" data-price="25000">
+            <img src="Bìahồsơ.jpg.jpg" alt="Bìa hồ sơ">
+            <h3>Bìa hồ sơ</h3>
+            <p>Bìa hồ sơ bền, giữ tài liệu gọn gàng, dễ dàng sử dụng.</p>
+            <div class="price">25.000 VND</div>
+            <button onclick="addToCart(6, 'Bìa hồ sơ', 25000)">Thêm vào giỏ</button>
+        </div>
+    </div>
+</div>
+
+<!-- Liên hệ -->
+<div id="contact">
+    <h2>Liên hệ</h2>
+    <p>Email: <a href="mailto:dinhthuhang2005@gmail.com">dinhthuhang2005@gmail.com</a></p>
+    <p>Điện thoại: 0948576621</p>
+    <p>Facebook: <a href="https://www.facebook.com/dinhthuhang.2801" target="_blank">Liên kết</a></p>
+</div>
+
+<!-- Bảng nhập thông tin cá nhân -->
+<div class="overlay" id="overlay"></div>
+<div class="personal-info" id="personal-info">
+    <h3>Điền thông tin cá nhân</h3>
+    <form id="personal-form">
+        <label for="fullname">Họ và tên:</label>
+        <input type="text" id="fullname" name="fullname" required>
+        
+        <label for="address">Địa chỉ:</label>
+        <input type="text" id="address" name="address" required>
+        
+        <label for="phone">Số điện thoại:</label>
+        <input type="text" id="phone" name="phone" required>
+        
+        <button type="submit">Xác nhận đơn hàng</button>
+        <button type="button" onclick="cancelOrder()">Hủy bỏ</button>
+    </form>
+</div>
+
+<!-- Bảng cảm ơn -->
+<div class="thank-you" id="thank-you">
+    <h3>Cảm ơn quý khách đã sử dụng dịch vụ!</h3>
+    <p>Đơn hàng của bạn đã được xác nhận.</p>
+    <button class="back-btn" onclick="backToHome()">Quay lại trang chủ</button>
+</div>
+
+<script>
+// Mảng lưu trữ sản phẩm trong giỏ hàng
+let cart = [];
+
+// Hàm thêm sản phẩm vào giỏ hàng
+function addToCart(id, name, price) {
+    let existingProduct = cart.find(item => item.id === id);
+    if (existingProduct) {
+        existingProduct.quantity++;
+    } else {
+        cart.push({ id, name, price, quantity: 1 });
+    }
+    updateCart();
+}
+
+// Hàm cập nhật giỏ hàng
+function updateCart() {
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+    document.querySelector('.cart').textContent = `Giỏ hàng (${cartCount})`;
+
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = '';
+    cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - ${item.quantity} x ${item.price} VND`;
+        cartItems.appendChild(li);
+    });
+}
+
+// Hàm mở/đóng giỏ hàng
+function toggleCart() {
+    const cartContent = document.querySelector('.cart-content');
+    cartContent.style.display = cartContent.style.display === 'none' ? 'block' : 'none';
+}
+
+// Hàm xử lý thanh toán
+function checkout() {
+    document.getElementById('personal-info').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+}
+
+// Hàm hủy bỏ thông tin
+function cancelOrder() {
+    document.getElementById('personal-info').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+
+// Xử lý khi submit form
+document.getElementById('personal-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Ẩn bảng nhập thông tin cá nhân và làm mờ nền
+    document.getElementById('personal-info').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+
+    // Hiển thị bảng cảm ơn và làm mờ nền
+    document.getElementById('thank-you').style.display = 'block';
+    document.getElementById('overlay').classList.add('show');
+});
+
+// Hàm quay lại trang chủ
+function backToHome() {
+    // Cuộn trang về đầu
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Ẩn bảng cảm ơn, bảng thông tin cá nhân, giỏ hàng
+    document.getElementById('thank-you').style.display = 'none';
+    document.getElementById('personal-info').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+    document.querySelector('.cart-content').style.display = 'none';
+
+    // Reset giỏ hàng (số lượng về 0)
+    cart = [];
+    updateCart();  // Cập nhật lại giỏ hàng sau khi reset
+}
+
+
+</script>
+
+</body>
+</html>
